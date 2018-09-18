@@ -1,0 +1,14 @@
+
+
+
+
+
+SHOW DATABASES;
+
+USE Te3139db;
+
+SHOW TABLES;
+
+DESC tablename;
+
+SHOW CREATE TABLE;

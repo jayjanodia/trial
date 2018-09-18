@@ -1,0 +1,61 @@
+SQL> CREATE TABLE Employee(emp_id integer, project varchar(50), status varchar(20), dates Date);
+Table created.
+
+SQL> ALTER TABLE Employee ADD PRIMARY KEY (emp_id,project);
+Table altered.
+
+SQL> CREATE TABLE Incentive_List(emp_id integer, project varchar(50));
+Table created.
+
+
+
+SQL> INSERT INTO Employee VALUES(1,'Project Management','Completed','24-October-2017');
+1 row created.
+
+SQL> INSERT INTO Employee VALUES(2,'Software Requirement', 'Pending', '08-JULY-2018');
+1 row created.
+
+SQL> SELECT * FROM Employee;      
+    EMP_ID PROJECT											  STATUS		       DATES
+---------- -------------------------------------------------- -------------------- ------------------
+	     1 Project Management                                 Completed	           24-OCT-17
+
+	 	 2 Software Requirement                               Pending 	           08-JUL-18
+	 	 
+	 	 
+SQL> DECLARE
+cursor c(eid number) is select * from Employee where eid=emp_id;
+emp_id Employee.emp_id%type;
+project Employee.project%type;
+status employee.status%type;
+dates employee.dates%type;
+
+BEGIN
+open c(1);
+
+if c%isopen then
+loop
+fetch c into emp_id, project, status, dates;
+
+if(status='Completed') then
+BEGIN
+dbms_output.put_line(emp_id||' is eligible');
+insert into Incentive_List values(emp_id, project);
+end;
+end if; 
+
+exit when c%notfound;
+
+dbms_output.put_line(emp_id||' '||project||' '||status);
+end loop;
+
+close c;
+else
+dbms_output.put_line('unable to open cursor');
+end if;
+end;
+/ 
+1 Project Management Completed
+
+PL/SQL procedure successfully completed.
+

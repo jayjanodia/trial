@@ -1,0 +1,11 @@
+cursor emp_cursor is select * from emp;
+
+begin
+	for emp_record in emp_cursor
+	loop
+		if emp_record.status == 'pending' 
+	endif
+	
+cursor			cur_num(eid number) is select * from 
+
+	emp  where empt_id=eid 

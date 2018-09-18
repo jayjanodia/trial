@@ -1,0 +1,69 @@
+--https://www.techonthenet.com/mysql/
+
+
+
+
+
+
+
+
+
+CREATE TABLE department(dept_id int, dept_name varchar(50));
+
+CREATE TABLE professors(prof_id int, prof_fname varchar(50), prof_lname varchar(50), dept_id int, designation varchar(100), salary int, doj varchar(100), email varchar(100), phone int, city varchar(50),primary key(prof_id)); 
+
+CREATE TABLE works(prof_id int, dept_id int, duration int, FOREIGN KEY(prof_id) REFERENCES professors(prof_id), FOREIGN KEY(dept_id) REFERENCES department(dept_id));
+
+--CREATE TABLE shift(prof_id int, shift varchar(10), working_hours int, FOREIGN KEY(prof_id) REFERENCES professors(prof_id));
+
+CREATE TABLE shift(prof_id int, shift int, working_hours real, foreign key(prof_id) references professors(prof_id), primary key(prof_id,shift));
+
+
+INSERT INTO department VALUES(9,'Electronics');
+
+INSERT INTO professors VALUES(39,'Jay','Janodia',9,'CEO',80000,"2015-01-01",'jay.janodia@gmail.com',987654339,'Mumbai');
+
+INSERT INTO works VALUES(22,2,4),(23,3,4),(24,4,5),(31,5,4),(36,6,6),(37,7,6),(38,8,6),(39,9,10),(40,10,8);
+
+select * from professors where prof_fname like 'j%' or prof_fname like 's%';
+
+SELECT DISTINCT city FROM professors;
+
+SELECT count(DISTINCT(city)) FROM professors;
+
+UPDATE professors SET salary = salary + (salary*5.0/100.0) where doj="2015-01-01";
+--UPDATE professors SET salary=salary+salary*0.05;
+
+
+--UNION
+SELECT * FROM professors WHERE city="Mumbai" UNION ALL SELECT * FROM professors WHERE city="Pune" ORDER BY city; 
+--SELECT city FROM professors WHERE city="Mumbai" UNION ALL SELECT city FROM professors WHERE city="Pune" ORDER BY city; 
+
+
+--INTERSECTION
+SELECT * FROM professors WHERE doj IN("2016-01-01","2015-01-01");
+ 	
+ 	
+ 	ALTER TABLE professors DROP COLUMN doj;
+ 	ALTER TABLE professors ADD COLUMN doj DATE AFTER salary;
+	UPDATE professors SET doj="2016-02-14" where prof_id=22;
+	
+
+--MAX
+SELECT * FROM professors where salary=(SELECT MAX(salary) FROM professors);
+--SELECT MAX(salary) AS LargestPrice FROM professors;
+--SELECT *, MAX(salary) FROM professors;
+--SELECT *, MAX(salary) FROM professors GROUP BY salary;
+
+
+--BETWEEN
+SELECT * FROM professors WHERE salary BETWEEN 60000 AND 80000;
+--SELECT * FROM professors WHERE salary>60000 AND salary<80000;
+
+
+--decreasing order
+SELECT prof_fname, salary, doj FROM professors ORDER BY salary DESC;
+
+
+--IN
+SELECT dept_id, prof_fname, prof_lname, doj FROM professors WHERE salary IN(30000,40000,50000);

@@ -1,0 +1,15 @@
+Company has decided to mark all those employees eligible for incentives who are having project submission status before deadline. Whenever such updates take place a record for the same is maintained in the incentive_list table.
+
+	TABLE EMPLOYEE contains of employee_id, project, status(completed or pending), date
+		  INCENTIVE_LIST contains employee_id, project
+		  
+Use parameterized cursor for the above statement
+
+
+Write PL/SQL block using explicit cursor cursor for loop for following requirements:
+
+		Company has decided to delete those employee's record who are having project submission status as pending. Whenever such 			updates take place a record for the same is added in the pending_list table. 
+		
+		
+		
+		CREATE TABLE Employee(emp_id number, project varchar(20), status varchar(20), Dates date

@@ -1,0 +1,184 @@
+1. Find the professor details and department details using NATURAL JOIN.
+
+	MariaDB [Te3139db]> SELECT * FROM department NATURAL JOIN professors;
+	+---------+------------------------+---------+------------+------------+---------------------+--------+------------				+-----------------------------+----------+---------+
+	| dept_id | dept_name              | prof_id | prof_fname | prof_lname | designation         | salary | doj        | email                       | phone     |city    |
+	+---------+------------------------+---------+------------+------------+---------------------+--------+------------+-----------------------------+----------+---------+
+	|       1 | Computer               |      21 | Mehul      | Choksi     | Technical Architect |  60000 | 2016-02-10 | mehul.choksi@gmail.com      | 987654321 |Mumbai  |
+	|       2 | Computer               |      22 | Janhavi    | Dabak      | Assistant Engineer  |  58000 | 2017-02-15 | janhavi.dabak@gmail.com     | 987654322 |Pune    |
+	|       3 | Computer               |      24 | Soham      | Deshmukh   | Manager             |  65000 | 2015-09-28 | soham.deshmukh@gmail.com    | 987654324 |Allahbad|
+	|       4 | Information Technology |      31 | Shubham    | Gadre      | Head Manager        |  72000 | 2017-02-17 | shubham.gadre@gmail.com     | 987654331 |Pune	  |
+	|       5 | Electronics            |      33 | Madhumita  | Gokhale    | Assistant Manager   |  62000 | 2017-02-21 | madhumita.gokhale@gmail.com | 987654333 |Pune    |
+	|       6 | Electronics            |      36 | Tejas      | Honmode    | Assistant Chairman  |  60000 | 2015-09-30 | tejas.honmode@gmail.com     | 987654336 |Pimpri  |
+	|       7 | Electronics            |      37 | Abhilash   | Gj         | Chairman            |  78750 | 2015-01-01 | abhilash.gj@gmail.com       | 987654337 |Pimpri  |
+	|       8 | Information Technology |      38 | Rucha      | Jaiswal    | Software Engineer   |  64000 | 2016-02-24 | rucha.jaiswal@gmail.com     | 987654338 |Pune    |
+	|       9 | Computer               |      39 | Jay        | Janodia    | CEO                 |  84000 | 2015-01-01 | jay.janodia@gmail.com       | 987654339 |Mumbai  |
+	|      10 | Electronics            |      40 | Sukhad     | Joshi      | CTO                 |  81900 | 2015-01-01 | tejas.honmode@gmail.com     | 987654340 |Pimpri  |
+	+---------+------------------------+---------+------------+------------+---------------------+--------+------------+-----------------------------+----------+---------+
+	10 rows in set (0.00 sec)
+
+
+2. Find the prof_id, prof_name and shift. (INNER JOIN)
+	MariaDB [Te3139db]> SELECT professors.prof_id,professors.prof_fname,shift.shift FROM professors 
+							INNER JOIN shift ON professors.prof_id=shift.prof_id;
+	+---------+------------+-------+
+	| prof_id | prof_fname | shift |
+	+---------+------------+-------+
+	|      21 | Mehul      |     1 |
+	|      22 | Janhavi    |     2 |
+	|      24 | Soham      |     1 |
+	|      31 | Shubham    |     2 |
+	|      33 | Madhumita  |     2 |
+	|      36 | Tejas      |     1 |
+	|      37 | Abhilash   |     1 |
+	|      38 | Rucha      |     2 |
+	|      39 | Jay        |     1 |
+	|      40 | Sukhad     |     1 |
+	+---------+------------+-------+
+	10 rows in set (0.00 sec)
+
+
+3. List all the department details and the corresponding names of professors in the same department.(left outer join)
+
+	MariaDB [Te3139db]> SELECT department.dept_id, department.dept_name, professors.prof_fname FROM department 
+							LEFT JOIN professors ON department.dept_id=professors.dept_id; 
+	+---------+------------------------+------------+
+	| dept_id | dept_name              | prof_fname |
+	+---------+------------------------+------------+
+	|       1 | Computer               | Mehul      |
+	|       2 | Computer               | Janhavi    |
+	|       3 | Computer               | Soham      |
+	|       4 | Information Technology | Shubham    |
+	|       5 | Electronics            | Madhumita  |
+	|       6 | Electronics            | Tejas      |
+	|       7 | Electronics            | Abhilash   |
+	|       8 | Information Technology | Rucha      |
+	|       9 | Computer               | Jay        |
+	|      10 | Electronics            | Sukhad     |
+	+---------+------------------------+------------+
+	10 rows in set (0.00 sec)
+
+
+4. List all the professors and the corresponding names of department.(right outer join)
+	
+	MariaDB [Te3139db]> SELECT department.dept_name, professors.prof_fname FROM department 
+							RIGHT JOIN professors ON department.dept_id=professors.dept_id; 
+	+------------------------+------------+
+	| dept_name              | prof_fname |
+	+------------------------+------------+
+	| Computer               | Mehul      |
+	| Computer               | Janhavi    |
+	| Computer               | Soham      |
+	| Information Technology | Shubham    |
+	| Electronics            | Madhumita  |
+	| Electronics            | Tejas      |
+	| Electronics            | Abhilash   |
+	| Information Technology | Rucha      |
+	| Computer               | Jay        |
+	| Electronics            | Sukhad     |
+	+------------------------+------------+
+	10 rows in set (0.00 sec)
+
+
+5. Display professor name, dept_name, shift, salary where prof_id = 101;(multitable join)
+	
+	MariaDB [Te3139db]> SELECT professors.prof_fname, department.dept_name, shift.shift, professors.salary FROM professors 
+							INNER JOIN department ON department.dept_id=professors.dept_id 
+							INNER JOIN shift ON professors.prof_id=shift.prof_id;
+	+------------+------------------------+-------+--------+
+	| prof_fname | dept_name              | shift | salary |
+	+------------+------------------------+-------+--------+
+	| Mehul      | Computer               |     1 |  60000 |
+	| Janhavi    | Computer               |     2 |  58000 |
+	| Soham      | Computer               |     1 |  65000 |
+	| Shubham    | Information Technology |     2 |  72000 |
+	| Madhumita  | Electronics            |     2 |  62000 |
+	| Tejas      | Electronics            |     1 |  60000 |
+	| Abhilash   | Electronics            |     1 |  78750 |
+	| Rucha      | Information Technology |     2 |  64000 |
+	| Jay        | Computer               |     1 |  84000 |
+	| Sukhad     | Electronics            |     1 |  81900 |
+	+------------+------------------------+-------+--------+
+	10 rows in set (0.00 sec)
+
+	MariaDB [Te3139db]> SELECT professors.prof_fname, department.dept_name, shift.shift, professors.salary FROM professors 
+						INNER JOIN department ON department.dept_id=professors.dept_id 
+						INNER JOIN shift ON professors.prof_id=shift.prof_id WHERE professors.prof_id=39;
+	+------------+-----------+-------+--------+
+	| prof_fname | dept_name | shift | salary |
+	+------------+-----------+-------+--------+
+	| Jay        | Computer  |     1 |  84000 |
+	+------------+-----------+-------+--------+
+	1 row in set (0.00 sec)
+
+
+6. list the total number of professor in each department.(count and any join,groupby)
+	
+	MariaDB [Te3139db]> SELECT COUNT(professors.prof_id), department.dept_name FROM professors 
+						INNER JOIN department ON professors.dept_id=department.dept_id group by department.dept_name;
+	+---------------------------+------------------------+
+	| COUNT(professors.prof_id) | dept_name              |
+	+---------------------------+------------------------+
+	|                         4 | Computer               |
+	|                         4 | Electronics            |
+	|                         2 | Information Technology |
+	+---------------------------+------------------------+
+	3 rows in set (0.00 sec)
+
+	
+
+
+7. List the prof_id associated department and the dept_name having name ‘computer’;(subquery)
+
+	MariaDB [Te3139db]> SELECT professors.prof_id FROM department 
+		INNER JOIN professors ON department.dept_id=professors.dept_id WHERE department.dept_name='Computer';
+	+---------+
+	| prof_id |
+	+---------+
+	|      21 |
+	|      22 |
+	|      24 |
+	|      39 |
+	+---------+
+	4 rows in set (0.00 sec)
+
+8. Find the names of all departments where the professors joined in year 2015 (or date of joining is 1-1-2015).(subquery)
+	MariaDB [Te3139db]> SELECT department.dept_name,professors.prof_fname FROM department 
+						INNER JOIN professors ON department.dept_id=professors.dept_id WHERE professors.doj="2015-01-01";
+	+-------------+------------+
+	| dept_name   | prof_fname |
+	+-------------+------------+
+	| Electronics | Abhilash   |
+	| Computer    | Jay        |
+	| Electronics | Sukhad     |
+	+-------------+------------+
+	3 rows in set (0.00 sec)
+
+9. Create view showing the professor and shift details. (COMPLEX VIEW)
+
+
+	MariaDB [Te3139db]> CREATE view complex AS 
+	SELECT professors.prof_id,professors.prof_fname,professors.designation, professors.salary, professors.doj, professors.email, professors.phone, shift.shift FROM professors INNER JOIN shift ON professors.prof_id=shift.prof_id;
+	Query OK, 0 rows affected (0.02 sec)
+
+	MariaDB [Te3139db]> SELECT * FROM complex;
+	+---------+------------+---------------------+--------+------------+-----------------------------+-----------+-------+
+	| prof_id | prof_fname | designation         | salary | doj        | email                       | phone     | shift |
+	+---------+------------+---------------------+--------+------------+-----------------------------+-----------+-------+
+	|      21 | Mehul      | Technical Architect |  60000 | 2016-02-10 | mehul.choksi@gmail.com      | 987654321 |     1 |
+	|      22 | Janhavi    | Assistant Engineer  |  58000 | 2017-02-15 | janhavi.dabak@gmail.com     | 987654322 |     2 |
+	|      24 | Soham      | Manager             |  65000 | 2015-09-28 | soham.deshmukh@gmail.com    | 987654324 |     1 |
+	|      31 | Shubham    | Head Manager        |  72000 | 2017-02-17 | shubham.gadre@gmail.com     | 987654331 |     2 |
+	|      33 | Madhumita  | Assistant Manager   |  62000 | 2017-02-21 | madhumita.gokhale@gmail.com | 987654333 |     2 |
+	|      36 | Tejas      | Assistant Chairman  |  60000 | 2015-09-30 | tejas.honmode@gmail.com     | 987654336 |     1 |
+	|      37 | Abhilash   | Chairman            |  78750 | 2015-01-01 | abhilash.gj@gmail.com       | 987654337 |     1 |
+	|      38 | Rucha      | Software Engineer   |  64000 | 2016-02-24 | rucha.jaiswal@gmail.com     | 987654338 |     2 |
+	|      39 | Jay        | CEO                 |  84000 | 2015-01-01 | jay.janodia@gmail.com       | 987654339 |     1 |
+	|      40 | Sukhad     | CTO                 |  81900 | 2015-01-01 | tejas.honmode@gmail.com     | 987654340 |     1 |
+	+---------+------------+---------------------+--------+------------+-----------------------------+-----------+-------+
+	10 rows in set (0.01 sec)
+
+	
+10. Perform Manipulation on simple view-Insert, update, delete, drop view.
+
+	

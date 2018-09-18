@@ -1,0 +1,101 @@
+cd /home/student/3139/DBMS/mongodb-linux-x86_64-4.0.1/bin
+
+./mongo 10.10.10.54/Te3139db -u te3139 -p te3139
+
+show databases;		//show dbs;
+
+use te3139db
+
+show db;
+
+db.documentname.insert({"filename":"extra"})		//for inserting document into database
+
+db.dropDatabase()  		//for deleting database as a whole
+
+==========================================================CREATE COLLECTION========================================================
+
+db.createCollection(name,options)
+
+Name is name of collection to be created. Options is a document and is used to specify configuration of collection
+
+> db.createCollection("mycollection")
+{ "ok" : 1 }
+> show collections
+mycollection
+system.indexes
+
+==========================================================DELETE COLLECTION========================================================
+
+> db.tutorialspoint.drop()
+true
+> show collections;
+mycollection
+system.indexes
+
+
+===========================================================INSERT DOCUMENT=========================================================
+
+insert document can also be used to create collection. Also syntax for inserting one document is different from syntax for inserting multiple documents
+------------------------------------------------------------ONE DOCUMENT-----------------------------------------------------------
+> db.student.insert({
+... _id: ObjectId(7df78ad8902c),
+... name: 
+... 'Jay Janodia'
+... year: 'III'
+... semester: 5
+... rollno: 3139
+... })
+
+comma may or may not be used, it's optional.
+-----------------------------------------------------------MULTIPLE DOCUMENTS------------------------------------------------------
+> db.student.insert([
+... {
+... name: 'Rucha Jaiswal',
+... year: 'III',
+... semester:5,
+... rollno: 3138
+... },
+... {
+... name: 'Sukhad Joshi',
+... year: 'III',
+... semester: 5,
+... rollno: 3140
+... }
+... ])
+BulkWriteResult({
+	"writeErrors" : [ ],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 2,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+
+
+=========================================================QUERYING DATA=============================================================
+
+> db.student.find()
+{ "_id" : ObjectId("5b8f8fde3771bf2e0c1da694"), "name" : "Jay Janodia", "rollno" : 3139, "year" : "III" }
+{ "_id" : ObjectId("5b8f908a3771bf2e0c1da695"), "name" : "Abhilash Gj", "rollno" : 3137, "year" : "III" }
+{ "_id" : ObjectId("5b8f950d3771bf2e0c1da696"), "name" : "Tejas Honmode", "rollno" : 3136, "year" : "III" }
+{ "_id" : ObjectId("5b8f950d3771bf2e0c1da697"), "name" : "Mehul Choksi", "rollno" : 3121, "year" : "III" }
+{ "_id" : ObjectId("5b974f6bf830e20be45dab00"), "name" : "Jay Janodia", "year" : "III", "semester" : 5, "rollno" : 3139 }
+{ "_id" : ObjectId("5b975cf720e49fd1ec8bbbba"), "name" : "Rucha Jaiswal", "year" : "III", "semester" : 5, "rollno" : 3138 }
+{ "_id" : ObjectId("5b975cf720e49fd1ec8bbbbb"), "name" : "Sukhad Joshi", "year" : "III", "semester" : 5, "rollno" : 3140 }
+
+> db.student.find().pretty()
+
+
+===========================================================UPDATE DOCUMENT=========================================================
+
+db.collection_name.update{selection_criteria, updated_criteria}
+
+db.collection_name.remove(deletion_criteria)
+
+
+
+=============================================================SORTING DATA==========================================================
+
+db.collection.

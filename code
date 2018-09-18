@@ -1,0 +1,29 @@
+DECLARE
+Cid number;
+Name varchar(50);
+DOP date;
+NOS varchar(20);
+Status varchar(20);
+BEGIN
+Cid:=&id;
+Name:=&name;
+DOP:=&dateofpayment;
+NOS:=&nameofscheme;
+Status:=&status;
+INSERT INTO Customer VALUES (Cid,Name,DOP,NOS,Status);
+EXCEPTION
+WHEN no_data_found THEN
+dbms_output.put_line('cust doesnt exist');
+END;
+/
+
+
+
+
+
+
+
+
+DECLARE 
+Cid number;
+DateOfIssue date;

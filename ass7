@@ -1,0 +1,33 @@
+SQL> CREATE TABLE Customers(Cust_id number, name varchar(50), total_purchase number, PRIMARY KEY (Cust_id,name));
+
+Table created.
+
+SQL> CREATE TABLE Category(Cust_id number, name varchar(50), Class varchar(20));
+
+Table created.
+
+SQL> INSERT INTO Customers VALUES (1, 'Jay Janodia', 15000);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES(2, 'Rucha Jaiswal', 5999);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES(3, 'Sukhad Joshi', 4999);
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES(4, 'Mehul Choksi', 20001);
+
+1 row created.
+
+SQL> select * from customers;
+
+   CUST_ID NAME 					      TOTAL_PURCHASE
+---------- -------------------------------------------------- --------------
+	 1 Jay Janodia						       15000
+	 2 Rucha Jaiswal						5999
+	 3 Sukhad Joshi 						4999
+	 4 Mehul Choksi 					       20001
+

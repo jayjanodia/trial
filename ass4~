@@ -1,0 +1,5 @@
+ SELECT * FROM department NATURAL JOIN professors;
+
+natural join can be used to select everything, also in natural join values dont repeat
+
+
